@@ -2,7 +2,7 @@ package com.lol.analizer.api;
 
 public class ApiKey {
 
-    private static final String API_KEY = "RGAPI-2f84e203-d599-473b-ba3d-a976921181d0";
+    private static final String API_KEY = "Your api key here";
 
     public static String getApiKey(){
         return API_KEY;
