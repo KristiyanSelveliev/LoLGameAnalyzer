@@ -1,4 +1,4 @@
-package com.lol.analizer.dto;
+package com.lol.analizer.api.summonerApi.dto;
 
 public class EncryptedSummonerDto {
 

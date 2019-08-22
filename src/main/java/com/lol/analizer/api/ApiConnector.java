@@ -10,7 +10,7 @@ import java.net.URL;
 
 public class ApiConnector {
 
-    public <T> T callApi(String url, Class<T> type) throws MalformedURLException {
+    public static <T> T callApi(String url, Class<T> type) throws MalformedURLException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         URL url1 = new URL(url);
