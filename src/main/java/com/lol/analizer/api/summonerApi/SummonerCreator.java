@@ -8,6 +8,8 @@ public class SummonerCreator {
         Summoner summoner = new Summoner();
         summoner.setName(summonerDto.getName());
         summoner.setLevel(summonerDto.getSummonerLevel());
+        summoner.setId(summonerDto.getId());
+        summoner.setAccountId(summonerDto.getAccountId());
         return summoner;
     }
 

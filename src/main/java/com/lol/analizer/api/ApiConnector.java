@@ -18,7 +18,7 @@ public class ApiConnector {
     public static <T> T callApi(String url, Class<T> type) throws MalformedURLException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        URL url1 = new URL(url);
+        URL url1 = new URL(ApiUtil.normalizeUrl(url));
         try {
             return objectMapper.readValue(url1, type);
         } catch (IOException e) {
@@ -31,7 +31,7 @@ public class ApiConnector {
     public static <T> List<T> apiGetListOfProperties(String url, Class<T> type, String jsonProperty) throws MalformedURLException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        URL url1 = new URL(url);
+        URL url1 = new URL(ApiUtil.normalizeUrl(url));
         try {
             JsonNode jsonNode = objectMapper.readTree(url1);
             jsonNode = jsonNode.get(jsonProperty);

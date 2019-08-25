@@ -4,6 +4,8 @@ public class Summoner {
 
     private String name;
     private String level;
+    private String id;
+    private String accountId;
 
     public String getName() {
         return name;
@@ -21,6 +23,22 @@ public class Summoner {
         this.level = level;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
     @Override
     public String toString() {
         return "Summoner{" +
@@ -28,4 +46,5 @@ public class Summoner {
                 ", level='" + level + '\'' + "\n" +
                 '}';
     }
+
 }
