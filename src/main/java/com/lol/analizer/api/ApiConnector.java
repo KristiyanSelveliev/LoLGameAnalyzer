@@ -1,11 +1,16 @@
 package com.lol.analizer.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class ApiConnector {
@@ -20,6 +25,32 @@ public class ApiConnector {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public static <T> List<T> apiGetListOfProperties(String url, Class<T> type, String jsonProperty) throws MalformedURLException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        URL url1 = new URL(url);
+        try {
+            JsonNode jsonNode = objectMapper.readTree(url1);
+            jsonNode = jsonNode.get(jsonProperty);
+            return fillChampionsFromJsonNode(jsonNode, objectMapper ,type);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private static <T> List<T> fillChampionsFromJsonNode(JsonNode node, ObjectMapper objectMapper, Class<T> type) throws JsonProcessingException {
+        List<T> list = new ArrayList<T>();
+        Iterator<JsonNode> iterator = node.iterator();
+        while(iterator.hasNext()){
+            JsonNode currentNode = iterator.next();
+            list.add( objectMapper.treeToValue(currentNode, type));
+        }
+        return list;
     }
 
 }

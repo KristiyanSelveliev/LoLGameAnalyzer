@@ -3,7 +3,7 @@ package com.lol.analizer.api.platform;
 public enum Region {
 
            RU   ("ru"),
-           KR   ( "kr"),
+           KR   ("kr"),
            JP   ("jp1"),
            NA   ("na1"),
            EUNE ("eun1"),

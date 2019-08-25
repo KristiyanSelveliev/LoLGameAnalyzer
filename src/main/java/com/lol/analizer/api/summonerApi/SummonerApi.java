@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 
 public class SummonerApi {
 
-    public Summoner getSummonerByName(String summoner, Region region) throws MalformedURLException {
+    public static Summoner getSummonerByName(String summoner, Region region) throws MalformedURLException {
         SummonerDto summonerDto = getSummonerDto("https://" + region.getValue()+
                 ".api.riotgames.com/lol/summoner/v4/summoners/by-name/"
                 + summoner
@@ -18,7 +18,7 @@ public class SummonerApi {
         return SummonerCreator.createSummoner(summonerDto);
     }
 
-    private SummonerDto getSummonerDto(String url) throws MalformedURLException {
+    private static SummonerDto getSummonerDto(String url) throws MalformedURLException {
         return ApiConnector.callApi(url, SummonerDto.class);
     }
 }
