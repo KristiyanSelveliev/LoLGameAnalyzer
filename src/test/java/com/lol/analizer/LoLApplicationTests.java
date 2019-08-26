@@ -4,6 +4,8 @@ import com.lol.analizer.api.championApi.ChampionApi;
 import com.lol.analizer.api.championApi.ChampionLoader;
 import com.lol.analizer.api.championApi.dto.ChampionDto;
 import com.lol.analizer.api.championApi.dto.ChampionMasteryDto;
+import com.lol.analizer.api.matchApi.MatchApi;
+import com.lol.analizer.api.matchApi.dto.MatchListDto;
 import com.lol.analizer.api.platform.Region;
 import com.lol.analizer.api.spectatorApi.SpectatorApi;
 import com.lol.analizer.api.spectatorApi.dto.CurrentGameInfoDto;
@@ -16,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.HashSet;
 
 
 @RunWith(SpringRunner.class)
@@ -66,6 +70,20 @@ public class LoLApplicationTests {
 			Assert.assertEquals(currentGameInfoDto.getPlatformId(), "EUN1");
 		}
 	}
+
+	@Test
+	public void getMatchListBySummoner() throws MalformedURLException {
+		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
+				                                                        Region.EUW,
+				                                                        MatchApi.MatchApiParamsHolder
+				                                                        .builder()
+																		.champions(new HashSet<>(Arrays.asList(1)))
+																		.seasons(new HashSet<>(Arrays.asList(9)))
+																		.build());
+		Assert.assertEquals(matchListDto.getMatches().get(0).getLane(), "MID");
+	}
+
+
 
 
 }
