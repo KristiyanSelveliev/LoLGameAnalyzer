@@ -3,6 +3,7 @@ package com.lol.analizer.api.matchApi;
 import com.lol.analizer.api.ApiConnector;
 import com.lol.analizer.api.ApiKey;
 import com.lol.analizer.api.matchApi.dto.MatchListDto;
+import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
 import com.lol.analizer.api.platform.Region;
 import com.lol.analizer.api.summonerApi.Summoner;
 import com.lol.analizer.api.summonerApi.SummonerApi;
@@ -25,6 +26,13 @@ public class MatchApi {
     public static MatchListDto getMatchListBySummonerName(String summonerName, Region region, MatchApiParamsHolder paramsHolder) throws MalformedURLException {
         Summoner summoner = SummonerApi.getSummonerByName(summonerName, region);
         return getMatchListByAccountId(summoner.getAccountId(), region, paramsHolder);
+    }
+
+    public static MatchTimelineDto getMatchTimeLineByMatchId(long matchId, Region region) throws MalformedURLException {
+        return ApiConnector.callApi("https://" + region.getValue()+
+                ".api.riotgames.com/lol/match/v4/timelines/by-match/"
+                + matchId
+                + ApiKey.getApiKeyRequestParam(), MatchTimelineDto.class);
     }
 
 

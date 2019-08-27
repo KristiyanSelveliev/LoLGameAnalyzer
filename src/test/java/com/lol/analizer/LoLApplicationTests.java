@@ -6,6 +6,8 @@ import com.lol.analizer.api.championApi.dto.ChampionDto;
 import com.lol.analizer.api.championApi.dto.ChampionMasteryDto;
 import com.lol.analizer.api.matchApi.MatchApi;
 import com.lol.analizer.api.matchApi.dto.MatchListDto;
+import com.lol.analizer.api.matchApi.dto.MatchReferenceDto;
+import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
 import com.lol.analizer.api.platform.Region;
 import com.lol.analizer.api.spectatorApi.SpectatorApi;
 import com.lol.analizer.api.spectatorApi.dto.CurrentGameInfoDto;
@@ -37,7 +39,7 @@ public class LoLApplicationTests {
 	public void getSummonerByNameWorks() throws MalformedURLException {
 		Summoner summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		Assert.assertEquals(summoner.getName(), LoLApplicationTests.summoner);
-		Assert.assertEquals(summoner.getLevel(),"49");
+		Assert.assertEquals(summoner.getLevel(),49);
 	}
 
 	@Test
@@ -52,13 +54,13 @@ public class LoLApplicationTests {
 		Summoner summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		ChampionDto championDto = ChampionLoader.loadChampionByName(LoLApplicationTests.champion);
 		ChampionMasteryDto championMasteryDto = ChampionApi.getChampionMasteryById(summoner.getId(), championDto.getKey(), Region.EUW);
-		Assert.assertEquals(championMasteryDto.getChampionLevel(),"6");
+		Assert.assertEquals(championMasteryDto.getChampionLevel(),6);
 	}
 
 	@Test
 	public void getChampionMasteryBySummonerName() throws MalformedURLException {
 		ChampionMasteryDto championMasteryDto = ChampionApi.getChampionMasteryByName(LoLApplicationTests.summoner, LoLApplicationTests.champion, Region.EUW);
-		Assert.assertEquals(championMasteryDto.getChampionLevel(),"6");
+		Assert.assertEquals(championMasteryDto.getChampionLevel(),6);
 	}
 
 	@Test
@@ -83,7 +85,19 @@ public class LoLApplicationTests {
 		Assert.assertEquals(matchListDto.getMatches().get(0).getLane(), "MID");
 	}
 
+	@Test
+    public void getMatchByMatchId() throws MalformedURLException {
+		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
+				Region.EUW,
+				MatchApi.MatchApiParamsHolder
+						.builder()
+						.champions(new HashSet<>(Arrays.asList(1)))
+						.seasons(new HashSet<>(Arrays.asList(9)))
+						.build());
 
-
+		MatchReferenceDto match = matchListDto.getMatches().get(0);
+		MatchTimelineDto matchTimelineDto = MatchApi.getMatchTimeLineByMatchId(match.getGameId(), Region.EUW);
+		Assert.assertEquals(matchTimelineDto.getFrameInterval(), 60000);
+	}
 
 }
