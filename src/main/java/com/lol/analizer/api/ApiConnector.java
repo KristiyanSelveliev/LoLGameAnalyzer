@@ -27,7 +27,6 @@ public class ApiConnector {
         }
     }
 
-
     public static <T> List<T> apiGetListOfProperties(String url, Class<T> type, String jsonProperty) throws MalformedURLException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -35,15 +34,14 @@ public class ApiConnector {
         try {
             JsonNode jsonNode = objectMapper.readTree(url1);
             jsonNode = jsonNode.get(jsonProperty);
-            return fillChampionsFromJsonNode(jsonNode, objectMapper ,type);
+            return getListOfObjectsFromNode(jsonNode, objectMapper ,type);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-
-    private static <T> List<T> fillChampionsFromJsonNode(JsonNode node, ObjectMapper objectMapper, Class<T> type) throws JsonProcessingException {
+    private static <T> List<T> getListOfObjectsFromNode(JsonNode node, ObjectMapper objectMapper, Class<T> type) throws JsonProcessingException {
         List<T> list = new ArrayList<T>();
         Iterator<JsonNode> iterator = node.iterator();
         while(iterator.hasNext()){

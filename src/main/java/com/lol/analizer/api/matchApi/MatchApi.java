@@ -2,6 +2,7 @@ package com.lol.analizer.api.matchApi;
 
 import com.lol.analizer.api.ApiConnector;
 import com.lol.analizer.api.ApiKey;
+import com.lol.analizer.api.matchApi.dto.MatchDto;
 import com.lol.analizer.api.matchApi.dto.MatchListDto;
 import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
 import com.lol.analizer.api.platform.Region;
@@ -16,7 +17,7 @@ import java.util.Set;
 public class MatchApi {
 
     public static MatchListDto getMatchListByAccountId(String accountId, Region region, MatchApiParamsHolder paramsHolder) throws MalformedURLException {
-        return ApiConnector.callApi("https://" + region.getValue()+
+        return ApiConnector.callApi("https://" + region.getValue() +
                 ".api.riotgames.com/lol/match/v4/matchlists/by-account/"
                 + accountId
                 + ApiKey.getApiKeyRequestParam()
@@ -29,10 +30,17 @@ public class MatchApi {
     }
 
     public static MatchTimelineDto getMatchTimeLineByMatchId(long matchId, Region region) throws MalformedURLException {
-        return ApiConnector.callApi("https://" + region.getValue()+
+        return ApiConnector.callApi("https://" + region.getValue() +
                 ".api.riotgames.com/lol/match/v4/timelines/by-match/"
                 + matchId
                 + ApiKey.getApiKeyRequestParam(), MatchTimelineDto.class);
+    }
+
+    public static MatchDto getMatchDtoByMatchId(long matchId, Region region) throws MalformedURLException {
+        return ApiConnector.callApi("https://" + region.getValue() +
+                ".api.riotgames.com/lol/match/v4/matches/"
+                + matchId
+                + ApiKey.getApiKeyRequestParam(), MatchDto.class);
     }
 
 

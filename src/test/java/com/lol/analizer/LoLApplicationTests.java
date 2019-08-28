@@ -5,6 +5,7 @@ import com.lol.analizer.api.championApi.ChampionLoader;
 import com.lol.analizer.api.championApi.dto.ChampionDto;
 import com.lol.analizer.api.championApi.dto.ChampionMasteryDto;
 import com.lol.analizer.api.matchApi.MatchApi;
+import com.lol.analizer.api.matchApi.dto.MatchDto;
 import com.lol.analizer.api.matchApi.dto.MatchListDto;
 import com.lol.analizer.api.matchApi.dto.MatchReferenceDto;
 import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
@@ -86,7 +87,7 @@ public class LoLApplicationTests {
 	}
 
 	@Test
-    public void getMatchByMatchId() throws MalformedURLException {
+    public void getMatchTimeLineByMatchId() throws MalformedURLException {
 		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
 				Region.EUW,
 				MatchApi.MatchApiParamsHolder
@@ -98,6 +99,21 @@ public class LoLApplicationTests {
 		MatchReferenceDto match = matchListDto.getMatches().get(0);
 		MatchTimelineDto matchTimelineDto = MatchApi.getMatchTimeLineByMatchId(match.getGameId(), Region.EUW);
 		Assert.assertEquals(matchTimelineDto.getFrameInterval(), 60000);
+	}
+
+	@Test
+	public void getMatchByMatchId() throws MalformedURLException {
+		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
+				Region.EUW,
+				MatchApi.MatchApiParamsHolder
+						.builder()
+						.champions(new HashSet<>(Arrays.asList(1)))
+						.seasons(new HashSet<>(Arrays.asList(9)))
+						.build());
+		MatchReferenceDto match = matchListDto.getMatches().get(0);
+		MatchDto matchDto = MatchApi.getMatchDtoByMatchId(match.getGameId(), Region.EUW);
+		Assert.assertEquals(matchDto.getSeasonId(), 9);
+
 	}
 
 }
