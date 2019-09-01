@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`summoners` (
   `level` INT NOT NULL,
   `encryptedId` VARCHAR(80) NOT NULL,
   `accountId` VARCHAR(80) NOT NULL,
+  `region` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`summoner_id`),
   UNIQUE INDEX `summoner_id_UNIQUE` (`summoner_id` ASC) VISIBLE,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,

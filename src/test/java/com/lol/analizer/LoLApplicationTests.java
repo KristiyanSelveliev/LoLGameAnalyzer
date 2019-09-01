@@ -1,19 +1,20 @@
 package com.lol.analizer;
 
-import com.lol.analizer.api.championApi.ChampionApi;
-import com.lol.analizer.api.championApi.ChampionLoader;
-import com.lol.analizer.api.championApi.dto.ChampionDto;
-import com.lol.analizer.api.championApi.dto.ChampionMasteryDto;
-import com.lol.analizer.api.matchApi.MatchApi;
-import com.lol.analizer.api.matchApi.dto.MatchDto;
-import com.lol.analizer.api.matchApi.dto.MatchListDto;
-import com.lol.analizer.api.matchApi.dto.MatchReferenceDto;
-import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
-import com.lol.analizer.api.gameConstants.Region;
-import com.lol.analizer.api.spectatorApi.SpectatorApi;
-import com.lol.analizer.api.spectatorApi.dto.CurrentGameInfoDto;
-import com.lol.analizer.api.summonerApi.Summoner;
-import com.lol.analizer.api.summonerApi.SummonerApi;
+import com.lol.analizer.externalApi.championApi.ChampionApi;
+import com.lol.analizer.externalApi.championApi.ChampionLoader;
+import com.lol.analizer.externalApi.championApi.dto.ChampionDto;
+import com.lol.analizer.externalApi.championApi.dto.ChampionMasteryDto;
+import com.lol.analizer.externalApi.exception.NoDataFoundException;
+import com.lol.analizer.externalApi.matchApi.MatchApi;
+import com.lol.analizer.externalApi.matchApi.dto.MatchDto;
+import com.lol.analizer.externalApi.matchApi.dto.MatchListDto;
+import com.lol.analizer.externalApi.matchApi.dto.MatchReferenceDto;
+import com.lol.analizer.externalApi.matchApi.dto.MatchTimelineDto;
+import com.lol.analizer.externalApi.gameConstants.Region;
+import com.lol.analizer.externalApi.spectatorApi.SpectatorApi;
+import com.lol.analizer.externalApi.spectatorApi.dto.CurrentGameInfoDto;
+import com.lol.analizer.externalApi.summonerApi.SummonerApi;
+import com.lol.analizer.externalApi.summonerApi.dto.SummonerDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +38,10 @@ public class LoLApplicationTests {
 	}
 
 	@Test
-	public void getSummonerByNameWorks() throws MalformedURLException {
-		Summoner summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
+	public void getSummonerByNameWorks() throws MalformedURLException, NoDataFoundException {
+		SummonerDto summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		Assert.assertEquals(summoner.getName(), LoLApplicationTests.summoner);
-		Assert.assertEquals(summoner.getLevel(),50);
+		Assert.assertEquals(summoner.getSummonerLevel(),50);
 	}
 
 	@Test
@@ -51,31 +52,34 @@ public class LoLApplicationTests {
 	}
 
 	@Test
-	public void getChampionMasteryBySummonerId() throws MalformedURLException {
-		Summoner summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
+	public void getChampionMasteryBySummonerId() throws MalformedURLException, NoDataFoundException {
+		SummonerDto summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		ChampionDto championDto = ChampionLoader.loadChampionByName(LoLApplicationTests.champion);
 		ChampionMasteryDto championMasteryDto = ChampionApi.getChampionMasteryById(summoner.getId(), championDto.getKey(), Region.EUW);
 		Assert.assertEquals(championMasteryDto.getChampionLevel(),7);
 	}
 
 	@Test
-	public void getChampionMasteryBySummonerName() throws MalformedURLException {
+	public void getChampionMasteryBySummonerName() throws MalformedURLException, NoDataFoundException {
 		ChampionMasteryDto championMasteryDto = ChampionApi.getChampionMasteryByName(LoLApplicationTests.summoner, LoLApplicationTests.champion, Region.EUW);
 		Assert.assertEquals(championMasteryDto.getChampionLevel(),7);
 	}
 
 	@Test
-	public void getSummonerActiveGame() throws MalformedURLException {
-		Summoner summoner = SummonerApi.getSummonerByName("Red Lust", Region.EUNE);
-		Assert.assertEquals(summoner.getName(), "Red Lust");
-		CurrentGameInfoDto currentGameInfoDto = SpectatorApi.getActiveGameBySummonerId(summoner.getId(), Region.EUNE);
-		if(currentGameInfoDto != null) {
+	public void getSummonerActiveGame() throws MalformedURLException, NoDataFoundException {
+		SummonerDto summoner = SummonerApi.getSummonerByName("Dr Caligari", Region.EUNE);
+		Assert.assertEquals(summoner.getName(), "Dr Caligari");
+		try {
+			CurrentGameInfoDto currentGameInfoDto = SpectatorApi.getActiveGameBySummonerId(summoner.getId(), Region.EUNE);
 			Assert.assertEquals(currentGameInfoDto.getPlatformId(), "EUN1");
+		}catch (NoDataFoundException e){
+
 		}
+
 	}
 
 	@Test
-	public void getMatchListBySummoner() throws MalformedURLException {
+	public void getMatchListBySummoner() throws MalformedURLException, NoDataFoundException {
 		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
 				                                                        Region.EUW,
 				                                                        MatchApi.MatchApiParamsHolder
@@ -87,7 +91,7 @@ public class LoLApplicationTests {
 	}
 
 	@Test
-    public void getMatchTimeLineByMatchId() throws MalformedURLException {
+    public void getMatchTimeLineByMatchId() throws MalformedURLException, NoDataFoundException {
 		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
 				Region.EUW,
 				MatchApi.MatchApiParamsHolder
@@ -102,7 +106,7 @@ public class LoLApplicationTests {
 	}
 
 	@Test
-	public void getMatchByMatchId() throws MalformedURLException {
+	public void getMatchByMatchId() throws MalformedURLException, NoDataFoundException {
 		MatchListDto matchListDto = MatchApi.getMatchListBySummonerName(LoLApplicationTests.summoner,
 				Region.EUW,
 				MatchApi.MatchApiParamsHolder
