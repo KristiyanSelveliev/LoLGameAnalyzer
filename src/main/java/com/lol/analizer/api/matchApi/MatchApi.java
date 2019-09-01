@@ -5,7 +5,7 @@ import com.lol.analizer.api.ApiKey;
 import com.lol.analizer.api.matchApi.dto.MatchDto;
 import com.lol.analizer.api.matchApi.dto.MatchListDto;
 import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
-import com.lol.analizer.api.platform.Region;
+import com.lol.analizer.api.gameConstants.Region;
 import com.lol.analizer.api.summonerApi.Summoner;
 import com.lol.analizer.api.summonerApi.SummonerApi;
 import lombok.Builder;

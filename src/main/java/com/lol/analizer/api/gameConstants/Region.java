@@ -1,5 +1,10 @@
-package com.lol.analizer.api.platform;
+package com.lol.analizer.api.gameConstants;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Region {
 
            RU   ("ru"),
@@ -13,13 +18,5 @@ public enum Region {
            LA2  ("la2");
 
     private final String value;
-
-        Region(String value){
-            this.value = value;
-        }
-
-    public String getValue() {
-        return value;
-    }
 
 }

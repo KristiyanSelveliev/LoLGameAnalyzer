@@ -4,7 +4,7 @@ import com.lol.analizer.api.ApiConnector;
 import com.lol.analizer.api.ApiKey;
 import com.lol.analizer.api.championApi.dto.ChampionDto;
 import com.lol.analizer.api.championApi.dto.ChampionMasteryDto;
-import com.lol.analizer.api.platform.Region;
+import com.lol.analizer.api.gameConstants.Region;
 import com.lol.analizer.api.summonerApi.Summoner;
 import com.lol.analizer.api.summonerApi.SummonerApi;
 

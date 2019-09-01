@@ -2,7 +2,7 @@ package com.lol.analizer.api.summonerApi;
 
 import com.lol.analizer.api.ApiConnector;
 import com.lol.analizer.api.ApiKey;
-import com.lol.analizer.api.platform.Region;
+import com.lol.analizer.api.gameConstants.Region;
 import com.lol.analizer.api.summonerApi.dto.SummonerDto;
 
 import java.net.MalformedURLException;

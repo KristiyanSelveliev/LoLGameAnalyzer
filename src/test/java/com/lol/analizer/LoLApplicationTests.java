@@ -9,7 +9,7 @@ import com.lol.analizer.api.matchApi.dto.MatchDto;
 import com.lol.analizer.api.matchApi.dto.MatchListDto;
 import com.lol.analizer.api.matchApi.dto.MatchReferenceDto;
 import com.lol.analizer.api.matchApi.dto.MatchTimelineDto;
-import com.lol.analizer.api.platform.Region;
+import com.lol.analizer.api.gameConstants.Region;
 import com.lol.analizer.api.spectatorApi.SpectatorApi;
 import com.lol.analizer.api.spectatorApi.dto.CurrentGameInfoDto;
 import com.lol.analizer.api.summonerApi.Summoner;
@@ -40,7 +40,7 @@ public class LoLApplicationTests {
 	public void getSummonerByNameWorks() throws MalformedURLException {
 		Summoner summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		Assert.assertEquals(summoner.getName(), LoLApplicationTests.summoner);
-		Assert.assertEquals(summoner.getLevel(),49);
+		Assert.assertEquals(summoner.getLevel(),50);
 	}
 
 	@Test
@@ -55,13 +55,13 @@ public class LoLApplicationTests {
 		Summoner summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		ChampionDto championDto = ChampionLoader.loadChampionByName(LoLApplicationTests.champion);
 		ChampionMasteryDto championMasteryDto = ChampionApi.getChampionMasteryById(summoner.getId(), championDto.getKey(), Region.EUW);
-		Assert.assertEquals(championMasteryDto.getChampionLevel(),6);
+		Assert.assertEquals(championMasteryDto.getChampionLevel(),7);
 	}
 
 	@Test
 	public void getChampionMasteryBySummonerName() throws MalformedURLException {
 		ChampionMasteryDto championMasteryDto = ChampionApi.getChampionMasteryByName(LoLApplicationTests.summoner, LoLApplicationTests.champion, Region.EUW);
-		Assert.assertEquals(championMasteryDto.getChampionLevel(),6);
+		Assert.assertEquals(championMasteryDto.getChampionLevel(),7);
 	}
 
 	@Test
