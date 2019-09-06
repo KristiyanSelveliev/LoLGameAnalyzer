@@ -9,6 +9,6 @@ import java.net.MalformedURLException;
 public interface ISummonerService {
 
     Summoner saveSummoner(String summonerName, Region region) throws MalformedURLException, NoDataFoundException;
-    Summoner loadSummonerByName(String summonerName, Region region);
+    Summoner loadSummonerByName(String summonerName, Region region) throws MalformedURLException, NoDataFoundException;
     Summoner loadSummonerByAccountId(String id, Region region);
 }

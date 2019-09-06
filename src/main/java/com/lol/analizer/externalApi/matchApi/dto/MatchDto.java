@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class MatchDto {
+
     int seasonId;
     int queueId;
     long gameId;
@@ -15,7 +16,7 @@ public class MatchDto {
     String gameVersion;
     String platformId;
     String gameMode;
-    int  mapId;
+    int mapId;
     String gameType;
     List<TeamStatsDto> teams;
     List<ParticipantDto> participants;

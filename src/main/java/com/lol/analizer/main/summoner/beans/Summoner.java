@@ -13,7 +13,7 @@ public class Summoner {
     private String summonerId;
     private String name;
     private long level;
-    private Region region;
+    private String region;
     @JsonIgnore
     private String accountId;
     @JsonIgnore

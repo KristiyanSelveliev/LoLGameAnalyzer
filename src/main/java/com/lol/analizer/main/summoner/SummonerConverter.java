@@ -12,7 +12,7 @@ public class SummonerConverter {
         summoner.setEncryptedId(summonerDto.getId());
         summoner.setName(summonerDto.getName());
         summoner.setLevel(summonerDto.getSummonerLevel());
-        summoner.setRegion(region);
+        summoner.setRegion(region.getValue());
         return summoner;
     }
 }

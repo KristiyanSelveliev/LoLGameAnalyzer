@@ -2,6 +2,8 @@ package com.lol.analizer;
 
 import com.lol.analizer.externalApi.exception.NoDataFoundException;
 import com.lol.analizer.externalApi.gameConstants.Region;
+import com.lol.analizer.externalApi.summonerApi.SummonerApi;
+import com.lol.analizer.externalApi.summonerApi.dto.SummonerDto;
 import com.lol.analizer.main.summoner.beans.Summoner;
 import com.lol.analizer.main.summoner.impl.SummonerService;
 import org.junit.Assert;
@@ -17,7 +19,7 @@ import java.net.MalformedURLException;
 @SpringBootTest
 public class SummonerServiceTest {
 
-    private static String summoner = "random name";
+    private static String summoner = "YULSTER";
 
     @Autowired
     SummonerService summonerService;
@@ -29,7 +31,20 @@ public class SummonerServiceTest {
     @Test
     public void saveSummoner() throws MalformedURLException, NoDataFoundException {
        Summoner summoner = summonerService.saveSummoner(SummonerServiceTest.summoner, Region.EUW);
-        Assert.assertEquals(summoner.getName().toLowerCase(), SummonerServiceTest.summoner.toLowerCase());
+        Assert.assertEquals(SummonerServiceTest.summoner.toLowerCase(), summoner.getName().toLowerCase());
+    }
+
+    @Test
+    public void getSummonerByName() throws MalformedURLException, NoDataFoundException {
+        Summoner summoner = summonerService.loadSummonerByName(SummonerServiceTest.summoner.toLowerCase(), Region.EUW);
+        Assert.assertEquals(SummonerServiceTest.summoner.toLowerCase(), summoner.getName().toLowerCase());
+    }
+
+    @Test
+    public void getSummonerByAccountId() throws MalformedURLException, NoDataFoundException {
+        SummonerDto summonerDto = SummonerApi.getSummonerByName(SummonerServiceTest.summoner, Region.EUW);
+        Summoner summoner = summonerService.loadSummonerByAccountId(summonerDto.getAccountId(), Region.EUW);
+        Assert.assertEquals(SummonerServiceTest.summoner.toLowerCase(), summoner.getName().toLowerCase());
     }
 
 }

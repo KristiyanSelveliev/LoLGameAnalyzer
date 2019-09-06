@@ -3,6 +3,8 @@ package com.lol.analizer.externalApi.gameConstants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.HashMap;
+
 @Getter
 @AllArgsConstructor
 public enum Region {

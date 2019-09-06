@@ -22,8 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 
 @RunWith(SpringRunner.class)
@@ -117,7 +116,7 @@ public class LoLApplicationTests {
 		MatchReferenceDto match = matchListDto.getMatches().get(0);
 		MatchDto matchDto = MatchApi.getMatchDtoByMatchId(match.getGameId(), Region.EUW);
 		Assert.assertEquals(matchDto.getSeasonId(), 9);
-
 	}
+
 
 }

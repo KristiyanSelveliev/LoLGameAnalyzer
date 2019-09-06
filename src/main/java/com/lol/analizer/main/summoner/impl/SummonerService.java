@@ -33,13 +33,18 @@ public class SummonerService implements ISummonerService {
     }
 
     @Override
-    public Summoner loadSummonerByName(String summonerName, Region region) {
-        return null;
+    public Summoner loadSummonerByName(String summonerName, Region region) throws MalformedURLException, NoDataFoundException {
+        Summoner summoner = summonerDao.loadSummonerByName(summonerName, region);
+        if(summoner == null){
+            summoner = saveSummoner(summonerName, region);
+        }
+        return summoner;
     }
 
     @Override
     public Summoner loadSummonerByAccountId(String id, Region region) {
-        return null;
+        Summoner summoner = summonerDao.loadSummonerByAccountId(id, region);
+        return summoner;
     }
 
 }

@@ -23,256 +23,186 @@ USE `mydb` ;
 -- -----------------------------------------------------
 -- Table `mydb`.`summoners`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`summoners` (
-  `summoner_id` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `level` INT NOT NULL,
-  `encryptedId` VARCHAR(80) NOT NULL,
-  `accountId` VARCHAR(80) NOT NULL,
-  `region` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`summoner_id`),
-  UNIQUE INDEX `summoner_id_UNIQUE` (`summoner_id` ASC) VISIBLE,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-  UNIQUE INDEX `accountId_UNIQUE` (`accountId` ASC) VISIBLE)
-ENGINE = InnoDB;
+CCREATE TABLE `champions` (
+   `champion_id` int(11) NOT NULL,
+   `version` varchar(45) DEFAULT NULL,
+   `key` varchar(45) DEFAULT NULL,
+   `name` varchar(45) NOT NULL,
+   `title` varchar(45) NOT NULL,
+   `attack` int(11) DEFAULT NULL,
+   `defense` int(11) DEFAULT NULL,
+   `magic` int(11) DEFAULT NULL,
+   `difficulty` int(11) DEFAULT NULL,
+   PRIMARY KEY (`champion_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`champions`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`champions` (
-  `champion_id` INT NOT NULL,
-  `version` VARCHAR(45) NULL,
-  `key` VARCHAR(45) NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
-  `attack` INT NULL,
-  `defense` INT NULL,
-  `magic` INT NULL,
-  `difficulty` INT NULL,
-  PRIMARY KEY (`champion_id`))
-ENGINE = InnoDB;
+ CREATE TABLE `champions_roles` (
+   `champion_id` int(11) NOT NULL,
+   `role_id` int(11) NOT NULL,
+   KEY `champion_Roles_champion_id_idx` (`champion_id`),
+   KEY `champions_roles_role_id_idx` (`role_id`),
+   CONSTRAINT `champions_roles_champion_id` FOREIGN KEY (`champion_id`) REFERENCES `champions` (`champion_id`),
+   CONSTRAINT `champions_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `champroles` (`role_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `champroles` (
+   `role_id` int(11) NOT NULL,
+   `name` varchar(45) NOT NULL,
+   PRIMARY KEY (`role_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `matches` (
+   `match_id` bigint(20) NOT NULL,
+   `season` int(11) NOT NULL,
+   `patch` varchar(45) DEFAULT NULL,
+   `region` varchar(45) NOT NULL,
+   `gameMode` varchar(45) NOT NULL,
+   `mapId` int(11) NOT NULL,
+   `gameType` varchar(45) NOT NULL,
+   `gameDuration` bigint(20) NOT NULL,
+   `gameCreation` bigint(20) NOT NULL,
+   PRIMARY KEY (`match_id`),
+   UNIQUE KEY `match_id_UNIQUE` (`match_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `match_participant_stats` (
+   `match_id` bigint(20) NOT NULL,
+   `participant_id` varchar(80) NOT NULL,
+   `firstBloodAsist` varchar(45) NOT NULL,
+   `visionScore` int(11) NOT NULL,
+   `magicDamageDealtToChampions` int(11) NOT NULL,
+   `damageDealtToObjectives` int(11) NOT NULL,
+   `totalTimeCrowdControlDealt` int(11) NOT NULL,
+   `longestTimeSpentLiving` int(11) NOT NULL,
+   `tripleKills` int(11) NOT NULL,
+   `kills` int(11) NOT NULL,
+   `totalScoreRank` int(11) NOT NULL,
+   `neutralMinionsKilled` int(11) NOT NULL,
+   `damageDealtToTurrets` int(11) NOT NULL,
+   `physicalDamageDealtToChampions` int(11) NOT NULL,
+   `largestMultiKill` int(11) NOT NULL,
+   `totalUnitsHealed` int(11) NOT NULL,
+   `wardsKilled` int(11) NOT NULL,
+   `largestCriticalStrike` int(11) NOT NULL,
+   `largestKillingSpree` int(11) NOT NULL,
+   `quadraKills` int(11) NOT NULL,
+   `teamObjective` int(11) NOT NULL,
+   `magicDamageDealt` int(11) NOT NULL,
+   `item2` int(11) NOT NULL,
+   `item3` int(11) NOT NULL,
+   `item0` int(11) NOT NULL,
+   `neutralMinionsKilledTeamJungle` int(11) NOT NULL,
+   `item6` int(11) NOT NULL,
+   `item4` int(11) NOT NULL,
+   `item5` int(11) NOT NULL,
+   `damageSelfMitigated` int(11) NOT NULL,
+   `magicalDamageTaken` int(11) NOT NULL,
+   `firstInhibitorKill` varchar(45) NOT NULL,
+   `trueDamageTaken` int(11) NOT NULL,
+   `assists` int(11) NOT NULL,
+   `combatPlayerScore` int(11) NOT NULL,
+   `goldSpent` int(11) NOT NULL,
+   `trueDamageDealt` int(11) NOT NULL,
+   `totalDamageTaken` int(11) NOT NULL,
+   `physicalDamageDealt` int(11) NOT NULL,
+   `sightWardsBoughtInGame` int(11) NOT NULL,
+   `totalDamageDealtToChampions` int(11) NOT NULL,
+   `physicalDamageTaken` int(11) NOT NULL,
+   `totalPlayerScore` int(11) NOT NULL,
+   `win` varchar(45) NOT NULL,
+   `objectivePlayerScore` int(11) NOT NULL,
+   `totalDamageDealt` int(11) NOT NULL,
+   `item1` int(11) NOT NULL,
+   `neutralMinionsKilledEnemyJungle` int(11) NOT NULL,
+   `deaths` int(11) NOT NULL,
+   `wardsPlaced` int(11) NOT NULL,
+   `turretKills` int(11) NOT NULL,
+   `firstBloodKill` varchar(45) NOT NULL,
+   `trueDamageDealtToChampions` int(11) NOT NULL,
+   `goldEarned` int(11) NOT NULL,
+   `killingSprees` int(11) NOT NULL,
+   `unrealKills` int(11) NOT NULL,
+   `altarsCaptured` int(11) NOT NULL,
+   `firstTowerAssist` varchar(45) NOT NULL,
+   `firstTowerKill` varchar(45) NOT NULL,
+   `champLevel` int(11) NOT NULL,
+   `doubleKills` int(11) NOT NULL,
+   `inhibitorKills` int(11) NOT NULL,
+   `firstInhibitorAssist` varchar(45) NOT NULL,
+   `visionWardsBoughtInGame` int(11) NOT NULL,
+   `altarsNeutralized` int(11) NOT NULL,
+   `pentaKills` int(11) NOT NULL,
+   `totalHeal` int(11) NOT NULL,
+   `totalMinionsKilled` int(11) NOT NULL,
+   `timeCCingOthers` int(11) NOT NULL,
+   KEY `match_participant_stats_participant_id_idx` (`participant_id`),
+   KEY `match_participant_stats_match_id` (`match_id`),
+   CONSTRAINT `match_participant_stats_match_id` FOREIGN KEY (`match_id`) REFERENCES `matches` (`match_id`),
+   CONSTRAINT `match_participant_stats_participant_id` FOREIGN KEY (`participant_id`) REFERENCES `matches_participants` (`summoner_account_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`champRoles`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`champRoles` (
-  `role_id` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`role_id`))
-ENGINE = InnoDB;
+ CREATE TABLE `summoners` (
+   `summoner_id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(45) NOT NULL,
+   `level` int(11) NOT NULL,
+   `encryptedId` varchar(80) NOT NULL,
+   `accountId` varchar(80) NOT NULL,
+   `region` varchar(45) NOT NULL,
+   PRIMARY KEY (`summoner_id`),
+   UNIQUE KEY `summoner_id_UNIQUE` (`summoner_id`),
+   UNIQUE KEY `name_UNIQUE` (`name`),
+   UNIQUE KEY `accountId_UNIQUE` (`accountId`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `summoners_matches` (
+   `match_id` bigint(20) NOT NULL,
+   `accountId` varchar(80) NOT NULL,
+   `lane` varchar(45) NOT NULL,
+   `region` varchar(45) NOT NULL,
+   `season` int(11) NOT NULL,
+   `queue` int(11) DEFAULT NULL,
+   `role` varchar(45) NOT NULL,
+   `timestamp` bigint(20) DEFAULT NULL,
+   KEY `summoners_matches_match_id_idx` (`match_id`),
+   KEY `summoners_matches_account_id_idx` (`accountId`),
+   CONSTRAINT `summoners_matches_match_id` FOREIGN KEY (`match_id`) REFERENCES `matches` (`match_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `teams_stats` (
+   `match_id` bigint(20) NOT NULL,
+   `teamId` int(11) NOT NULL,
+   `firstDragon` varchar(45) NOT NULL,
+   `firstInhibitor` varchar(45) NOT NULL,
+   `baronKills` int(11) NOT NULL,
+   `firstRiftHerald` varchar(45) NOT NULL,
+   `firstBaron` varchar(45) NOT NULL,
+   `riftHeraldKills` int(11) NOT NULL,
+   `firstBlood` varchar(45) NOT NULL,
+   `vilemawKills` int(11) NOT NULL,
+   `inhibitorKills` int(11) NOT NULL,
+   `firstTower` varchar(45) NOT NULL,
+   `towerKills` int(11) NOT NULL,
+   `dominionVictoryScore` int(11) NOT NULL,
+   `win` varchar(45) NOT NULL,
+   `dragonKills` int(11) NOT NULL,
+   KEY `teams_stats_match_id_idx` (`match_id`),
+   CONSTRAINT `teams_stats_match_id` FOREIGN KEY (`match_id`) REFERENCES `matches` (`match_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `team_bans` (
+   `match_id` bigint(20) NOT NULL,
+   `teamId` int(11) NOT NULL,
+   `pickTurn` int(11) NOT NULL,
+   `championId` int(11) NOT NULL,
+   KEY `team_bans_match_id_idx` (`match_id`) /*!80000 INVISIBLE */,
+   KEY `team_bans_champion_id_idx` (`championId`),
+   CONSTRAINT `team_bans_champion_id` FOREIGN KEY (`championId`) REFERENCES `champions` (`champion_id`),
+   CONSTRAINT `team_bans_match_id` FOREIGN KEY (`match_id`) REFERENCES `matches` (`match_id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`champions_roles`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`champions_roles` (
-  `champion_id` INT NOT NULL,
-  `role_id` INT NOT NULL,
-  INDEX `champion_Roles_champion_id_idx` (`champion_id` ASC) VISIBLE,
-  INDEX `champions_roles_role_id_idx` (`role_id` ASC) VISIBLE,
-  CONSTRAINT `champions_roles_champion_id`
-    FOREIGN KEY (`champion_id`)
-    REFERENCES `mydb`.`champions` (`champion_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `champions_roles_role_id`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `mydb`.`champRoles` (`role_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`games`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`games` (
-  `game_id` INT NOT NULL,
-  `season` INT NOT NULL,
-  `patch` VARCHAR(45) NULL,
-  `region` VARCHAR(45) NOT NULL,
-  `gameMode` VARCHAR(45) NOT NULL,
-  `mapId` INT NOT NULL,
-  `gameType` VARCHAR(45) NOT NULL,
-  `gameDuration` INT NOT NULL,
-  `gameCreation` INT NOT NULL,
-  PRIMARY KEY (`game_id`),
-  UNIQUE INDEX `game_id_UNIQUE` (`game_id` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`games_participants`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`games_participants` (
-  `game_id` INT NOT NULL,
-  `summoner_account_id` VARCHAR(80) NOT NULL,
-  `region` VARCHAR(45) NOT NULL,
-  `patch` INT NOT NULL,
-  `gameMode` VARCHAR(45) NOT NULL,
-  `map` VARCHAR(45) NOT NULL,
-  `team` INT NOT NULL,
-  `champion_id` INT NOT NULL,
-  INDEX `games_participants_game_id_idx` (`game_id` ASC) VISIBLE,
-  INDEX `games_participants_summoner_account_id_idx` (`summoner_account_id` ASC) VISIBLE,
-  INDEX `games_participants_champion_id_idx` (`champion_id` ASC) VISIBLE,
-  CONSTRAINT `games_participants_game_id`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `mydb`.`games` (`game_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `games_participants_summoner_account_id`
-    FOREIGN KEY (`summoner_account_id`)
-    REFERENCES `mydb`.`summoners` (`accountId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `games_participants_champion_id`
-    FOREIGN KEY (`champion_id`)
-    REFERENCES `mydb`.`champions` (`champion_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`game_participant_stats`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`game_participant_stats` (
-  `game_id` INT NOT NULL,
-  `game_participant_id` VARCHAR(80) NOT NULL,
-  `firstBloodAsist` VARCHAR(45) NOT NULL,
-  `visionScore` INT NOT NULL,
-  `magicDamageDealtToChampions` INT NOT NULL,
-  `damageDealtToObjectives` INT NOT NULL,
-  `totalTimeCrowdControlDealt` INT NOT NULL,
-  `longestTimeSpentLiving` INT NOT NULL,
-  `tripleKills` INT NOT NULL,
-  `kills` INT NOT NULL,
-  `totalScoreRank` INT NOT NULL,
-  `neutralMinionsKilled` INT NOT NULL,
-  `damageDealtToTurrets` INT NOT NULL,
-  `physicalDamageDealtToChampions` INT NOT NULL,
-  `largestMultiKill` INT NOT NULL,
-  `totalUnitsHealed` INT NOT NULL,
-  `wardsKilled` INT NOT NULL,
-  `largestCriticalStrike` INT NOT NULL,
-  `largestKillingSpree` INT NOT NULL,
-  `quadraKills` INT NOT NULL,
-  `teamObjective` INT NOT NULL,
-  `magicDamageDealt` INT NOT NULL,
-  `item2` INT NOT NULL,
-  `item3` INT NOT NULL,
-  `item0` INT NOT NULL,
-  `neutralMinionsKilledTeamJungle` INT NOT NULL,
-  `item6` INT NOT NULL,
-  `item4` INT NOT NULL,
-  `item5` INT NOT NULL,
-  `damageSelfMitigated` INT NOT NULL,
-  `magicalDamageTaken` INT NOT NULL,
-  `firstInhibitorKill` VARCHAR(45) NOT NULL,
-  `trueDamageTaken` INT NOT NULL,
-  `assists` INT NOT NULL,
-  `combatPlayerScore` INT NOT NULL,
-  `goldSpent` INT NOT NULL,
-  `trueDamageDealt` INT NOT NULL,
-  `totalDamageTaken` INT NOT NULL,
-  `physicalDamageDealt` INT NOT NULL,
-  `sightWardsBoughtInGame` INT NOT NULL,
-  `totalDamageDealtToChampions` INT NOT NULL,
-  `physicalDamageTaken` INT NOT NULL,
-  `totalPlayerScore` INT NOT NULL,
-  `win` VARCHAR(45) NOT NULL,
-  `objectivePlayerScore` INT NOT NULL,
-  `totalDamageDealt` INT NOT NULL,
-  `item1` INT NOT NULL,
-  `neutralMinionsKilledEnemyJungle` INT NOT NULL,
-  `deaths` INT NOT NULL,
-  `wardsPlaced` INT NOT NULL,
-  `turretKills` INT NOT NULL,
-  `firstBloodKill` VARCHAR(45) NOT NULL,
-  `trueDamageDealtToChampions` INT NOT NULL,
-  `goldEarned` INT NOT NULL,
-  `killingSprees` INT NOT NULL,
-  `unrealKills` INT NOT NULL,
-  `altarsCaptured` INT NOT NULL,
-  `firstTowerAssist` VARCHAR(45) NOT NULL,
-  `firstTowerKill` VARCHAR(45) NOT NULL,
-  `champLevel` INT NOT NULL,
-  `doubleKills` INT NOT NULL,
-  `inhibitorKills` INT NOT NULL,
-  `firstInhibitorAssist` VARCHAR(45) NOT NULL,
-  `visionWardsBoughtInGame` INT NOT NULL,
-  `altarsNeutralized` INT NOT NULL,
-  `pentaKills` INT NOT NULL,
-  `totalHeal` INT NOT NULL,
-  `totalMinionsKilled` INT NOT NULL,
-  `timeCCingOthers` INT NOT NULL,
-  INDEX `game_participant_stats_game_participant_id_idx` (`game_participant_id` ASC) VISIBLE,
-  CONSTRAINT `game_participant_stats_game_id`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `mydb`.`games` (`game_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `game_participant_stats_game_participant_id`
-    FOREIGN KEY (`game_participant_id`)
-    REFERENCES `mydb`.`games_participants` (`summoner_account_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`teams_stats`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`teams_stats` (
-  `game_id` INT NOT NULL,
-  `teamId` INT NOT NULL,
-  `firstDragon` VARCHAR(45) NOT NULL,
-  `firstInhibitor` VARCHAR(45) NOT NULL,
-  `baronKills` INT NOT NULL,
-  `firstRiftHerald` VARCHAR(45) NOT NULL,
-  `firstBaron` VARCHAR(45) NOT NULL,
-  `riftHeraldKills` INT NOT NULL,
-  `firstBlood` VARCHAR(45) NOT NULL,
-  `vilemawKills` INT NOT NULL,
-  `inhibitorKills` INT NOT NULL,
-  `firstTower` VARCHAR(45) NOT NULL,
-  `towerKills` INT NOT NULL,
-  `dominionVictoryScore` INT NOT NULL,
-  `win` VARCHAR(45) NOT NULL,
-  `dragonKills` INT NOT NULL,
-  INDEX `teams_stats_game_id_idx` (`game_id` ASC) VISIBLE,
-  CONSTRAINT `teams_stats_game_id`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `mydb`.`games` (`game_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`team_bans`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`team_bans` (
-  `game_id` INT NOT NULL,
-  `teamId` INT NOT NULL,
-  `pickTurn` INT NOT NULL,
-  `championId` INT NOT NULL,
-  INDEX `team_bans_game_id_idx` (`game_id` ASC) VISIBLE,
-  INDEX `team_bans_champion_id_idx` (`championId` ASC) VISIBLE,
-  CONSTRAINT `team_bans_game_id`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `mydb`.`games` (`game_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `team_bans_champion_id`
-    FOREIGN KEY (`championId`)
-    REFERENCES `mydb`.`champions` (`champion_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
