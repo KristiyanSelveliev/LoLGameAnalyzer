@@ -3,8 +3,7 @@ package com.lol.analizer.externalApi.championApi;
 import com.lol.analizer.externalApi.championApi.dto.ChampionDto;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChampionPool {
@@ -12,11 +11,11 @@ public class ChampionPool {
     private static Map<String, ChampionDto> nameByChampion;
     private static Map<String, String> idByName;
 
-    private static boolean isNotLoaded() {
+    public static boolean isNotLoaded() {
         return CollectionUtils.isEmpty(nameByChampion) || CollectionUtils.isEmpty(idByName);
     }
 
-    private static void loadChampions() {
+    public static void loadChampions() {
       List<ChampionDto> champions = ChampionApi.getAllChampions();
       nameByChampion = ChampionMapper.mapNameByChampion(champions);
       idByName = ChampionMapper.mapIdByName(champions);
@@ -34,6 +33,17 @@ public class ChampionPool {
             loadChampions();
         }
         return getChampionByName(idByName.get(id));
+    }
+
+    public static int size(){
+        return idByName == null ? 0 : idByName.size();
+    }
+
+    public static List<ChampionDto> getAllChampions(){
+        if(isNotLoaded()){
+            loadChampions();
+        }
+        return new ArrayList<>(nameByChampion.values());
     }
 
     static class ChampionMapper{

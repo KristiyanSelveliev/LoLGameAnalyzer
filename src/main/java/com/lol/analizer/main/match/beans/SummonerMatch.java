@@ -1,6 +1,6 @@
 package com.lol.analizer.main.match.beans;
 
-import com.lol.analizer.externalApi.gameConstants.Region;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

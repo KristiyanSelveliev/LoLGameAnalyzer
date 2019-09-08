@@ -40,7 +40,7 @@ public class LoLApplicationTests {
 	public void getSummonerByNameWorks() throws MalformedURLException, NoDataFoundException {
 		SummonerDto summoner = SummonerApi.getSummonerByName(LoLApplicationTests.summoner, Region.EUW);
 		Assert.assertEquals(summoner.getName(), LoLApplicationTests.summoner);
-		Assert.assertEquals(summoner.getSummonerLevel(),50);
+		Assert.assertEquals(summoner.getSummonerLevel(),51);
 	}
 
 	@Test
